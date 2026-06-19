@@ -1,7 +1,7 @@
 {
-  "name": "Radio Fusion Austral",
-  "short_name": "Fusion Austral",
-  "description": "Desde la Patagonia al Mundo",
+  "name": "San Pedro Conecta",
+  "short_name": "SP Conecta",
+  "description": "Tv Online",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",

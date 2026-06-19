@@ -1,7 +1,7 @@
 {
   "template": "app",
-  "project_name": "Radio Fusion Austral",
-  "clientId": "cmf4du07u000313x255b7jy2t",
+  "project_name": "San Pedro Conecta",
+  "clientId": "cmkrey76u001yx1fzyexbeqpc",
   "sonicpanel_port": "8002",
   "ipstream_base_url": "https://dashboard.ipstream.cl/api/public",
   "sonicpanel_stream_url": "https://stream2.ipstream.cl/8002/stream",
