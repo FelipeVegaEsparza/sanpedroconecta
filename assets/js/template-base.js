@@ -90,6 +90,11 @@ class TemplateBase {
         const logoUrl = await this.dataManager.getImageUrl(data.logoUrl);
         logoElement.src = logoUrl;
         logoElement.style.display = 'block';
+        logoElement.onerror = () => {
+          console.warn('TemplateBase: Error loading logo from:', logoUrl);
+          logoElement.onerror = null;
+          logoElement.src = '/assets/icons/icon-96x96.png';
+        };
       }
       
       // Actualizar nombre en footer

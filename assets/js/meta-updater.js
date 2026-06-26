@@ -21,14 +21,14 @@ class MetaUpdater {
   async loadProjectData() {
     try {
       // Importar dinámicamente la función de API
-      const { getBasicData } = await import('./api.js');
+      const { getBasicData, buildImageUrl } = await import('./api.js');
       const basicData = await getBasicData();
       
       this.projectData = {
         name: basicData.projectName || basicData.name || 'Radio Stream',
         description: basicData.projectDescription || 'Escucha nuestra radio online en vivo. Música, noticias y entretenimiento las 24 horas del día.',
-        logoUrl: basicData.logoUrl ? `https://dashboard.ipstream.cl${basicData.logoUrl}` : '/assets/icons/icon-512x512.png',
-        coverUrl: basicData.coverUrl ? `https://dashboard.ipstream.cl${basicData.coverUrl}` : '/assets/icons/icon-512x512.png'
+        logoUrl: basicData.logoUrl ? await buildImageUrl(basicData.logoUrl) : '/assets/icons/icon-512x512.png',
+        coverUrl: basicData.coverUrl ? await buildImageUrl(basicData.coverUrl) : '/assets/icons/icon-512x512.png'
       };
       
       console.log('MetaUpdater: Project data loaded:', this.projectData);

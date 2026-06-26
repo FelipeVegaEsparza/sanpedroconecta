@@ -4623,6 +4623,7 @@ y Schedule Navigation */
 
 .dynamic-section .section-title .title-text,
 .dynamic-section h2.section-title .title-text {
+  color: #bdc3c7;
   background: linear-gradient(135deg, #95a5a6, #bdc3c7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

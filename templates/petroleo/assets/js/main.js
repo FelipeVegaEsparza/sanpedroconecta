@@ -59,7 +59,11 @@ class PetroleoTemplate extends TemplateBase {
     const section = document.getElementById(`${sectionName}-section`);
 
     if (section) {
-      section.style.setProperty('display', hasData ? '' : 'none', 'important');
+      if (hasData) {
+        section.style.removeProperty('display');
+      } else {
+        section.style.setProperty('display', 'none', 'important');
+      }
     }
 
     this.sectionStates[sectionName] = hasData;
@@ -601,13 +605,14 @@ class PetroleoTemplate extends TemplateBase {
 
   renderGalleryHtml(galleries) {
     return galleries.map(g => {
-      const title = g.name || '';
+      const title = g.title || g.name || '';
       const desc = g.description || '';
+      const cover = (g.images && g.images[0] && g.images[0].imageUrl) || g.imageUrl || '/assets/icons/icon-96x96.png';
       const count = (g.images || []).length;
       return `
       <div class="gallery-card" data-gallery-id="${g.id}" style="cursor:pointer;">
         <div class="gallery-card-image">
-          <img src="${g.imageUrl || '/assets/icons/icon-96x96.png'}" alt="${title}" loading="lazy">
+          <img src="${cover}" alt="${title}" loading="lazy">
           <div class="gallery-card-overlay">
             <i class="fas fa-images"></i>
             <span>${count} fotos</span>
@@ -624,7 +629,10 @@ class PetroleoTemplate extends TemplateBase {
   async loadAllGalleries(append) {
     try {
       const dm = getDataManager();
-      const galleries = await dm.loadGalleries();
+      let galleries = await dm.loadGalleries();
+      if (galleries && !Array.isArray(galleries) && galleries.data) {
+        galleries = galleries.data;
+      }
 
       if (!galleries || galleries.length === 0) {
         this.toggleSectionVisibility('galleries', false);
@@ -637,6 +645,11 @@ class PetroleoTemplate extends TemplateBase {
 
       for (const g of galleries) {
         if (g.imageUrl) g.imageUrl = await dm.getImageUrl(g.imageUrl);
+        if (g.images) {
+          for (const img of g.images) {
+            if (img.imageUrl) img.imageUrl = await dm.getImageUrl(img.imageUrl);
+          }
+        }
       }
 
       const html = this.renderGalleryHtml(galleries);

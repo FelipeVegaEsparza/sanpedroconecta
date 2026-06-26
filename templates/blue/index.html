@@ -918,6 +918,9 @@
           img.onload = () => {
             this.loadingLogo.src = logoUrl;
           };
+          img.onerror = () => {
+            console.warn('LoadingManager: Error loading logo from:', logoUrl);
+          };
           img.src = logoUrl;
         }
       }
