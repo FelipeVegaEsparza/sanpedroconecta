@@ -198,7 +198,7 @@ class BlueTemplate extends TemplateBase {
         
         if (titleEl) titleEl.textContent = news.name || '';
         if (dateEl) dateEl.innerHTML = `<i class="fas fa-calendar"></i> ${new Date(news.createdAt).toLocaleDateString('es-ES')}`;
-        if (contentEl) contentEl.innerHTML = news.description || news.shortText || '';
+        if (contentEl) contentEl.innerHTML = news.longText || news.description || news.shortText || '';
         
         if (imageEl && news.imageUrl) {
           const fullImageUrl = await dataManager.getImageUrl(news.imageUrl);
