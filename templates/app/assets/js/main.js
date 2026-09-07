@@ -459,8 +459,22 @@ class AppTemplate extends TemplateBase {
         const resp = await fetch('/config/config.json');
         const config = await resp.json();
         const mailTo = config.contact_email || 'contacto@radio.cl';
-        const mailBody = 'Nombre: ' + name + '%0D%0A' + 'Email: ' + email + '%0D%0A' + 'Asunto: ' + subject + '%0D%0A' + 'Mensaje: ' + message;
-        window.location.href = 'mailto:' + mailTo + '?subject=' + encodeURIComponent('Contacto: ' + subject) + '&body=' + mailBody;
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('subject', subject);
+        formData.append('message', message);
+        if (config.contact_form_endpoint) {
+          const sendResp = await fetch(config.contact_form_endpoint, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (!sendResp.ok) throw new Error('Formspree error: ' + sendResp.status);
+        } else {
+          const mailBody = 'Nombre: ' + name + '%0D%0A' + 'Email: ' + email + '%0D%0A' + 'Asunto: ' + subject + '%0D%0A' + 'Mensaje: ' + message;
+          window.location.href = 'mailto:' + mailTo + '?subject=' + encodeURIComponent('Contacto: ' + subject) + '&body=' + mailBody;
+        }
         if (feedback) { feedback.className = 'contact-feedback success'; feedback.textContent = 'Mensaje enviado'; feedback.style.display = 'block'; }
         form.reset();
       } catch (err) {
