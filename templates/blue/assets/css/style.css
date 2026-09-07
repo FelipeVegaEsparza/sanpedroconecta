@@ -1195,6 +1195,18 @@ a:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
+.sidebar-image-widget {
+  padding: 10px;
+}
+
+.sidebar-image-widget img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
 .widget-header {
   background: linear-gradient(135deg, rgba(149, 165, 166, 0.3), rgba(189, 195, 199, 0.3));
   backdrop-filter: blur(15px);
